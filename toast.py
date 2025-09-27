@@ -27,6 +27,8 @@ BLUE_DOG_EMOTE_ID = 1323012300554375178
 BLUE_DOG_EMOTE_NAME = 'BestBoi1stplace'
 BLUE_DOG_PIC_URL = "https://media.discordapp.net/stickers/1323013060067196980.webp?size=160&quality=lossless"
 
+SHERMA_EMOTE_ID = "<a:sherma:1421306382627377255>"
+
 DOG_BLUE = discord.Color.from_str("#2C4A85")
 
 @bot.event
@@ -35,9 +37,9 @@ async def on_ready():
     initialize_rps(bot)
     print(f'{bot.user} is online!')
 
-# @bot.event
-# async def on_message(message: discord.Message):
-#     print(message.stickers)
+@bot.event
+async def on_message(message: discord.Message):
+    await sherma_song(message)
 
 @bot.event
 async def on_reaction_add(reaction: discord.Reaction, user: discord.User):
@@ -150,5 +152,10 @@ async def send_not_admin_message(interaction: discord.Interaction) -> bool:
 
 async def toast_failed(interaction: discord.Interaction) -> bool:
     await interaction.response.send_message(content=f'\*Toast glitches out and the command fails\*')
+
+async def sherma_song(message: discord.Message):
+    if ("silksong" in message.content):
+        await message.channel.send(SHERMA_EMOTE_ID)
+        await message.channel.send("`Pi Na So Mi Ma Ni Se Da Na Fun Su Low Ba Fa Ri Do La Si Ma Net Do Ni Pwana Voo Ri Net`")
     
 bot.run(TOKEN)
