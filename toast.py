@@ -4,7 +4,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from toast_db import (create_user_table, increase_blue_dogs, get_blue_dogs, get_top_blue_dogs, delete_blue_dog, set_blue_dog, 
                       create_message_table, add_message_id, check_if_message_exists)
-from rps import initialize_rps, play_rps
+from rps import initialize_rps, play_rps, play_rps_solo
 
 create_user_table()
 create_message_table()
@@ -135,6 +135,11 @@ async def set_blue_dog_count(interaction: discord.Interaction, user: str, count:
 
 @bot.tree.command(name="rps", description="Play a game of Rock, Paper, Scissors", guild=GUILD_ID)
 async def rpc(interaction: discord.Interaction, selection: str):
+    result = play_rps_solo(selection.lower())
+    await interaction.response.send_message(content=result)
+
+@bot.tree.command(name="multi_rps", description="Play a game of Rock, Paper, Scissors with another player!", guild=GUILD_ID)
+async def multi_rps(interaction: discord.Interaction, selection: str):
     result = play_rps(bot, selection.lower(), interaction.user.name)
     await interaction.response.send_message(content=result)
 
@@ -156,6 +161,6 @@ async def toast_failed(interaction: discord.Interaction) -> bool:
 async def sherma_song(message: discord.Message):
     if ("silksong" in message.content):
         await message.channel.send(SHERMA_EMOTE_ID)
-        await message.channel.send("`Pi Na So Mi Ma Ni Se Da Na Fun Su Low Ba Fa Ri Do La Si Ma Net Do Ni Pwana Voo Ri Net`")
+        await message.channel.send("`Faridula Tzimanet, Donipuana Vorinet, Pinasami Manicet, Danafon siu Lobon!`")
     
 bot.run(TOKEN)

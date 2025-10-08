@@ -1,3 +1,4 @@
+import random
 valid_selections = ["rock", "paper", "scissors"]
 
 def initialize_rps(bot):
@@ -25,5 +26,19 @@ def play_rps(bot, selection: str, name: str):
             result_string = f'{bot.first_pick_name}: {bot.first_pick_selection}\n{name}: {selection}\n{bot.first_pick_name if result == 0 else name} wins!'
             initialize_rps(bot)
             return result_string
+    else:
+        return "Not a valid selection! Gotta pick rock, paper, or scissors"
+    
+def play_rps_solo(selection):
+    if (selection in valid_selections):
+        random_pick = valid_selections[random.randint(0, 2)]
+        if (random_pick == selection):
+            return f'You threw {selection} they threw {random_pick}\n**You tie!**'
+
+        result = calc_rps(selection, random_pick)
+        if (result == 0):
+            return f'You threw {selection} they threw {random_pick}\n**You win!**'
+        else:
+            return f'You threw {selection} they threw {random_pick}\n**You lose!**'
     else:
         return "Not a valid selection! Gotta pick rock, paper, or scissors"
